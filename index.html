@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakuru Worldcup Foari | Score Predictions</title>
+    <meta name="description"
+        content="Predict scores for the World Cup 2026 on Hakuru Worldcup Foari and climb the global leaderboard!">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div id="auth-overlay" class="overlay">
+        <div class="card auth-card">
+            <h1 style="margin-bottom: 0.5rem;">Join Hakuru Worldcup Foari</h1>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;"></p>
+            <div id="auth-error" style="color: #ef4444; font-size: 0.8rem; margin-bottom: 0.5rem; display: none;">
+                Username is required!</div>
+            <input type="text" id="auth-username" class="score-input" required
+                style="width: 100%; text-align: left; padding: 0 1.5rem; margin-bottom: 1rem; font-size: 1rem;"
+                placeholder="Enter Username">
+            <button class="btn" id="auth-btn" style="width: 100%; height: 50px;">Get Started</button>
+        </div>
+    </div>
+    <nav>
+        <div class="nav-logo" id="home-link">
+            ⚽ HAKURU WORLDCUP FOARI
+        </div>
+        <div class="nav-links">
+            <span class="nav-link active" data-page="matches" data-icon="📅">Matches</span>
+            <span class="nav-link" data-page="results" data-icon="🏆">Results</span>
+            <span class="nav-link" data-page="leaderboard" data-icon="📈">Board</span>
+            <span class="nav-link" data-page="profile" data-icon="👤">Profile</span>
+            <span class="nav-link" data-page="admin" data-icon="🔑" id="nav-admin" style="display: none;">Admin</span>
+        </div>
+    </nav>
+
+    <main>
+        <!-- MATCHES PAGE -->
+        <section id="matches" class="page active">
+            <header class="page-header">
+                <h1>Upcoming Matches</h1>
+                <p style="color: var(--text-muted);">Predict the scores to earn points.</p>
+            </header>
+            <div id="match-container">
+                <!-- Matches will be injected here -->
+            </div>
+        </section>
+
+        <!-- RESULTS PAGE -->
+        <section id="results" class="page">
+            <header class="page-header page-header-flex">
+                <div>
+                    <h1>Match Results</h1>
+                    <p style="color: var(--text-muted);">Final scores and results.</p>
+                </div>
+                <button class="btn" id="export-btn"
+                    style="background: var(--surface-color); border: 1px solid var(--border);">📥 Export Data</button>
+            </header>
+            <div id="results-container">
+                <!-- Finished matches will be injected here -->
+            </div>
+        </section>
+
+        <!-- LEADERBOARD PAGE -->
+        <section id="leaderboard" class="page">
+            <header class="page-header">
+                <h1 id="leaderboard-title">Leaderboard</h1>
+                <p style="color: var(--text-muted);"></p>
+            </header>
+            
+            <div id="leaderboard-menu" style="display: flex; flex-direction: column; align-items: center; gap: 1.25rem; padding: 4rem 0; max-width: 320px; margin: 0 auto; width: 100%;">
+                <button class="btn" id="leaderboard-overall-btn" style="width: 100%; padding: 1rem; font-size: 1.1rem; border-radius: 0.75rem; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); color: #22c55e; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">OVERALL</button>
+                <button class="btn" id="leaderboard-group-btn" style="width: 100%; padding: 1rem; font-size: 1.1rem; border-radius: 0.75rem; background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); color: #fbbf24; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">GROUP STAGE</button>
+                <button class="btn" id="leaderboard-r32-btn" style="width: 100%; padding: 1rem; font-size: 1.1rem; border-radius: 0.75rem; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); color: #3b82f6; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">ROUND OF 32</button>
+                <button class="btn" id="leaderboard-r16-btn" style="width: 100%; padding: 1rem; font-size: 1.1rem; border-radius: 0.75rem; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); color: #a855f7; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">ROUND OF 16</button>
+                <button class="btn" id="leaderboard-qf-btn" style="width: 100%; padding: 1rem; font-size: 1.1rem; border-radius: 0.75rem; background: rgba(236, 72, 153, 0.1); border: 1px solid rgba(236, 72, 153, 0.3); color: #ec4899; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">QUARTER FINALS</button>
+                <button class="btn" id="leaderboard-finals-btn" style="width: 100%; padding: 1rem; font-size: 1.1rem; border-radius: 0.75rem; background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.3); color: #f97316; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">FINALS</button>
+            </div>
+
+            <div class="card leaderboard-table-container" id="leaderboard-table-container" style="display: none;">
+                <div style="margin-bottom: 1.5rem;">
+                    <button class="btn" id="leaderboard-back-btn" style="background: var(--surface-color); border: 1px solid var(--border); padding: 0.5rem 1.25rem; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem;">⬅️ Back</button>
+                </div>
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th class="leaderboard-header">Rank</th>
+                            <th class="leaderboard-header">Player</th>
+                            <th class="leaderboard-header" style="text-align: center;">Voted</th>
+                            <th class="leaderboard-header" style="text-align: right;">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <!-- Leaderboard rows will be injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PROFILE PAGE -->
+        <section id="profile" class="page">
+            <header class="page-header">
+                <h1>My Profile</h1>
+            </header>
+            <div class="card">
+                <div class="profile-summary">
+                    <div class="profile-user-info">
+                        <div class="profile-avatar-container" style="position: relative; display: inline-block;">
+                            <div class="avatar profile-avatar" id="profile-avatar">👤</div>
+                            <span id="profile-crown" class="crown-badge"
+                                style="display: none; font-size: 2.2rem; top: -24px;">👑</span>
+                        </div>
+                        <div>
+                            <h1 id="display-name" style="font-size: 2rem;">Username</h1>
+                            <p style="color: var(--secondary); font-weight: 600;" id="display-rank">Rank: #--</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="card" style="margin: 0; text-align: center;">
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">TOTAL POINTS</div>
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--primary);" id="profile-pts">0</div>
+                    </div>
+                    <div class="card" style="margin: 0; text-align: center;">
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">PREDICTIONS</div>
+                        <div style="font-size: 2rem; font-weight: 800;" id="profile-count">0</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADMIN PAGE -->
+        <section id="admin" class="page">
+            <header class="page-header">
+                <h1>Admin Control Panel</h1>
+                <p style="color: var(--text-muted);">Predictions from players who predicted correctly for each completed
+                    match.</p>
+            </header>
+            <div id="admin-container">
+                <!-- Completed matches admin view will be injected here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- PENALTY MODAL -->
+    <div id="penalty-modal" class="overlay" style="display: none;">
+        <div class="card auth-card" style="max-width: 400px; padding: 2.5rem 2rem;">
+            <h2 style="margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif;">Penalty Shootout</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem;">Select the team that wins on penalties:</p>
+            
+            <div style="display: flex; justify-content: space-around; align-items: center; margin-bottom: 2rem; gap: 1.5rem;">
+                <div id="penalty-home-opt" style="cursor: pointer; padding: 1rem; border-radius: 1rem; border: 1px solid var(--border); transition: var(--transition); flex: 1; text-align: center;">
+                    <img id="penalty-home-flag" src="" style="width: 60px; height: 40px; border-radius: 6px; object-fit: cover; margin-bottom: 0.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3);" alt="">
+                    <div id="penalty-home-name" style="font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Home</div>
+                </div>
+                <div id="penalty-away-opt" style="cursor: pointer; padding: 1rem; border-radius: 1rem; border: 1px solid var(--border); transition: var(--transition); flex: 1; text-align: center;">
+                    <img id="penalty-away-flag" src="" style="width: 60px; height: 40px; border-radius: 6px; object-fit: cover; margin-bottom: 0.5rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3);" alt="">
+                    <div id="penalty-away-name" style="font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Away</div>
+                </div>
+            </div>
+            
+            <button class="btn" id="penalty-confirm-btn" style="width: 100%; height: 50px;" disabled>Confirm Winner</button>
+        </div>
+    </div>
+
+    <!-- GOALSCORER MODAL -->
+    <div id="goalscorer-modal" class="overlay" style="display: none; z-index: 1000;">
+        <div class="card auth-card" style="max-width: 450px; padding: 2rem; width: 90%;">
+            <h2 style="margin-bottom: 0.5rem; font-family: 'Outfit', sans-serif; text-align: center;">First Goalscorer</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem; text-align: center;">Predict the player who will score the first goal in Morocco vs France:</p>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <input type="text" id="goalscorer-search" class="score-input" style="width: 100%; text-align: left; padding: 0.75rem 1rem; font-size: 0.95rem; margin-bottom: 1rem;" placeholder="🔍 Search player name...">
+                
+                <div id="goalscorer-list" style="max-height: 250px; overflow-y: auto; border: 1px solid var(--border); border-radius: 0.75rem; padding: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem; background: rgba(15, 23, 42, 0.4);">
+                    <!-- Players will be injected here dynamically -->
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn" id="goalscorer-cancel-btn" style="flex: 1; height: 45px; background: transparent; border: 1px solid var(--border); color: var(--text-main);">Cancel</button>
+                <button class="btn" id="goalscorer-confirm-btn" style="flex: 1; height: 45px;" disabled>Confirm Pick</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="matches.js"></script>
+    <script src="config.js"></script>
+    <script src="database.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
